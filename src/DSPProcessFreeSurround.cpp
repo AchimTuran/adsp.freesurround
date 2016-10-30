@@ -94,7 +94,7 @@ AE_DSP_ERROR CDSPProcess_FreeSurround::StreamInitialize(const AE_DSP_SETTINGS *s
 
   m_DecoderChannelSetup  = (channel_setup)(settings->lOutChannelPresentFlags | AE_DSP_PRSNT_CH_LFE);
 
-  if (!m_Decoder)
+  if (m_Decoder)
     delete m_Decoder;
   m_Decoder = new CFreeSurroundDecoder(m_DecoderChannelSetup, default_block_size, m_SampleRate);
 
@@ -171,7 +171,7 @@ float CDSPProcess_FreeSurround::StreamGetDelay()
 unsigned int CDSPProcess_FreeSurround::StreamProcess(float **array_in, float **array_out, unsigned int samples)
 {
   if (!m_Decoder)
-    return samples;
+    return 0;
 
   float **outputs = m_Decoder->getOutputBuffers();
 

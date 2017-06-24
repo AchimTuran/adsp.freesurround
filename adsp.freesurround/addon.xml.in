@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon
 	id="adsp.freesurround"
-	version="0.4.0"
+	version="0.5.0"
 	name="Free Surround Processor"
-	provider-name="Team KODI">
+	provider-name="Alwin Esch and Achim Turan from Team Kodi">
 	<requires>@ADDON_DEPENDS@</requires>
 	<extension
 		point="kodi.adsp"
@@ -11,8 +11,8 @@
 	<extension point="kodi.addon.metadata">
 		<summary lang="en">Free Surround Audio DSP Processor</summary>
 		<description lang="en">FreeSurround is meant to be the KODI equivalent of your hi-fi receiver's Dolby ProLogic II button.
-It's purpose is to decode surround information from your stereo music and to produce multichannel output from it.</description>
-		<disclaimer lang="en">This is a open source audio dsp processing system, based upon work from pro_optimizer on foobar2000</disclaimer>
+It's purpose is to decode the surround sound information from your stereo sources to produce multichannel audio.</description>
+		<disclaimer lang="en">This AudioDSP add-on is based on the work from pro_optimizer</disclaimer>
 		<platform>@PLATFORM@</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
 		<forum>http://forum.kodi.tv/forumdisplay.php?fid=235</forum>

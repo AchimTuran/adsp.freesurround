@@ -77,7 +77,7 @@ CFreeSurroundAddon::CFreeSurroundAddon()
 
   std::string imagePath;
 
-  m_ModeInfoStruct.iUniqueDBModeId        = -1;         // set by RegisterMode
+  m_ModeInfoStruct.uiUniqueDBModeId       = 0;         // set by RegisterMode, @todo needs to be removed so that the developer doesn't has to care about it
   m_ModeInfoStruct.iModeType              = AE_DSP_MODE_TYPE_MASTER_PROCESS;
   m_ModeInfoStruct.iModeNumber            = ID_MASTER_PROCESS_FREE_SURROUND;
   m_ModeInfoStruct.bHasSettingsDialog     = true;

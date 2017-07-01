@@ -80,7 +80,6 @@ AE_DSP_ERROR CDSPProcess_FreeSurround::StreamCreate(const AE_DSP_SETTINGS *setti
   m_Settings.iProcessSamplerate     = settings->iProcessSamplerate;
   m_Settings.iOutFrames             = settings->iOutFrames;
   m_Settings.iOutSamplerate         = settings->iOutSamplerate;
-  m_Settings.bStereoUpmix           = settings->bStereoUpmix;
 
   return AE_DSP_ERROR_NO_ERROR;
 }
@@ -88,7 +87,7 @@ AE_DSP_ERROR CDSPProcess_FreeSurround::StreamCreate(const AE_DSP_SETTINGS *setti
 AE_DSP_ERROR CDSPProcess_FreeSurround::StreamInitialize(const AE_DSP_SETTINGS *settings)
 {
   m_SampleRate = settings->iProcessSamplerate;
-  m_LFEPresent = settings->lOutChannelPresentFlags & AE_DSP_PRSNT_CH_LFE;
+  m_LFEPresent = settings->lOutChannelPresentFlags & AE_DSP_PRSNT_CH_LFE ? true : false;
 
   m_DecoderChannelSetup  = (channel_setup)(settings->lOutChannelPresentFlags | AE_DSP_PRSNT_CH_LFE);
 

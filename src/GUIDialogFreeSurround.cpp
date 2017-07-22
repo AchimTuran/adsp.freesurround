@@ -126,7 +126,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     case DSP_SETTING_FREESURROUND_CIRCULAR_WRAP:
     {
       m_Settings.fCircularWrap = m_CircularWrap->GetFloatValue();
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
         process->SetCircularWrap(m_Settings.fCircularWrap);
       break;
@@ -134,7 +134,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     case DSP_SETTING_FREESURROUND_SHIFT:
     {
       m_Settings.fShift = m_Shift->GetFloatValue();
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
         process->SetShift(m_Settings.fShift);
       break;
@@ -142,7 +142,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     case DSP_SETTING_FREESURROUND_DEPTH:
     {
       m_Settings.fDepth = m_Depth->GetFloatValue();
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
         process->SetDepth(m_Settings.fDepth);
       break;
@@ -150,7 +150,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     case DSP_SETTING_FREESURROUND_FOCUS:
     {
       m_Settings.fFocus = m_Focus->GetFloatValue();
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
         process->SetFocus(m_Settings.fFocus);
       break;
@@ -158,7 +158,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     case DSP_SETTING_FREESURROUND_CENTER_IMAGE:
     {
       m_Settings.fCenterImage = m_CenterImage->GetFloatValue();
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
         process->SetCenterImage(m_Settings.fCenterImage);
       break;
@@ -166,7 +166,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     case DSP_SETTING_FREESURROUND_FRONT_SEPARATION:
     {
       m_Settings.fFrontSeparation = m_FrontSeparation->GetFloatValue();
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
         process->SetFrontSeparation(m_Settings.fFrontSeparation);
       break;
@@ -174,7 +174,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     case DSP_SETTING_FREESURROUND_REAR_SEPARATION:
     {
       m_Settings.fRearSeparation = m_RearSeparation->GetFloatValue();
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
         process->SetRearSeparation(m_Settings.fRearSeparation);
       break;
@@ -182,7 +182,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     case DSP_SETTING_FREESURROUND_LFE:
     {
       m_Settings.bLFE = m_LFE->IsSelected();
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
         process->SetBassRedirection(m_Settings.bLFE);
       break;
@@ -190,7 +190,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     case DSP_SETTING_FREESURROUND_LFE_LOW_CUTOFF:
     {
       m_Settings.fLowCutoff = m_LFE_LowCutoff->GetIntValue();
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
         process->SetLowCutoff(m_Settings.fLowCutoff);
       break;
@@ -198,7 +198,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     case DSP_SETTING_FREESURROUND_LFE_HIGH_CUTOFF:
     {
       m_Settings.fHighCutoff = m_LFE_HighCutoff->GetIntValue();
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
         process->SetHighCutoff(m_Settings.fHighCutoff);
       break;
@@ -209,7 +209,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
     {
       if (controlId == BUTTON_CANCEL)
       {
-        process = g_usedDSPs[m_StreamId];
+        process = nullptr; //= g_usedDSPs[m_StreamId];
         if (process)
           process->ResetSettings();
       }
@@ -241,7 +241,7 @@ bool CGUIDialogFreeSurround::OnClick(int controlId)
       m_LFE_LowCutoff->SetIntValue(m_Settings.fLowCutoff);
       m_LFE_HighCutoff->SetIntValue(m_Settings.fHighCutoff);
 
-      process = g_usedDSPs[m_StreamId];
+      process = nullptr; //= g_usedDSPs[m_StreamId];
       if (process)
       {
         process->SetCircularWrap(m_Settings.fCircularWrap);

@@ -33,33 +33,33 @@
 /*
  * Identifier translation from FreeSurround to KODI ADSP
  *
- * ci_front_left          = AE_DSP_PRSNT_CH_FL
- * ci_front_center_left   = AE_DSP_PRSNT_CH_FLOC
- * ci_front_center        = AE_DSP_PRSNT_CH_FC
- * ci_front_center_right  = AE_DSP_PRSNT_CH_FROC
- * ci_front_right         = AE_DSP_PRSNT_CH_FR
- * ci_side_front_left     = AE_DSP_PRSNT_CH_TFL
- * ci_side_front_right    = AE_DSP_PRSNT_CH_TFR
- * ci_side_center_left    = AE_DSP_PRSNT_CH_SL
- * ci_side_center_right   = AE_DSP_PRSNT_CH_SR
- * ci_side_back_left      = AE_DSP_PRSNT_CH_TBL
- * ci_side_back_right     = AE_DSP_PRSNT_CH_TBR
- * ci_back_left           = AE_DSP_PRSNT_CH_BL
- * ci_back_center_left    = AE_DSP_PRSNT_CH_BLOC
- * ci_back_center         = AE_DSP_PRSNT_CH_BC
- * ci_back_center_right   = AE_DSP_PRSNT_CH_BROC
- * ci_back_right          = AE_DSP_PRSNT_CH_BR
- * ci_lfe                 = AE_DSP_PRSNT_CH_LFE
+ * ci_front_left          = AUDIODSP_ADDON_CH_FL
+ * ci_front_center_left   = AUDIODSP_ADDON_CH_FLOC
+ * ci_front_center        = AUDIODSP_ADDON_CH_FC
+ * ci_front_center_right  = AUDIODSP_ADDON_CH_FROC
+ * ci_front_right         = AUDIODSP_ADDON_CH_FR
+ * ci_side_front_left     = AUDIODSP_ADDON_CH_TFL
+ * ci_side_front_right    = AUDIODSP_ADDON_CH_TFR
+ * ci_side_center_left    = AUDIODSP_ADDON_CH_SL
+ * ci_side_center_right   = AUDIODSP_ADDON_CH_SR
+ * ci_side_back_left      = AUDIODSP_ADDON_CH_TBL
+ * ci_side_back_right     = AUDIODSP_ADDON_CH_TBR
+ * ci_back_left           = AUDIODSP_ADDON_CH_BL
+ * ci_back_center_left    = AUDIODSP_ADDON_CH_BLOC
+ * ci_back_center         = AUDIODSP_ADDON_CH_BC
+ * ci_back_center_right   = AUDIODSP_ADDON_CH_BROC
+ * ci_back_right          = AUDIODSP_ADDON_CH_BR
+ * ci_lfe                 = AUDIODSP_ADDON_CH_LFE
  */
 
 const int grid_res = 21; // resolution of the lookup grid
 
 // channel allocation maps (per setup)
-typedef std::vector<std::vector<float*> > alloc_lut;
+typedef std::vector<std::vector<float*>> alloc_lut;
 extern std::map<unsigned,alloc_lut> chn_alloc;
 // channel metadata maps (per setup)
-extern std::map<unsigned,std::vector<float> > chn_angle;
-extern std::map<unsigned,std::vector<float> > chn_xsf;
-extern std::map<unsigned,std::vector<float> > chn_ysf;
-extern std::map<unsigned,std::vector<AE_DSP_CHANNEL_PRESENT> > chn_id;
+extern std::map<unsigned,std::vector<float>> chn_angle;
+extern std::map<unsigned,std::vector<float>> chn_xsf;
+extern std::map<unsigned,std::vector<float>> chn_ysf;
+extern std::map<unsigned,std::vector<AUDIODSP_ADDON_CHANNEL>> chn_id;
 extern bool init_maps();

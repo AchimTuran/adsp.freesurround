@@ -33,9 +33,9 @@ class CDSPProcess_FreeSurround
 {
 private:
   const unsigned int          m_StreamID;           /*!< @brief unique id of the audio stream packets */
-  AE_DSP_SETTINGS             m_Settings;           /*!< @brief the active XBMC audio settings */
-  int                         m_InputChannels;      /*!< @brief Current input channel format */
-  unsigned int                m_SampleRate;         /*!< @brief Stream sample rate */
+  AUDIODSP_ADDON_AUDIO_FORMAT m_inputFormat;        /*!< @brief the active XBMC audio settings */
+  AUDIODSP_ADDON_AUDIO_FORMAT m_outputFormat;       /*!< @brief the active XBMC audio settings */
+  AUDIODSP_ADDON_STREAM_PROPERTIES m_streamProperties;       /*!< @brief the active XBMC audio settings */
   sSettings                   m_Params;             /*!< @brief The actual settings from settings file */
   class CFreeSurroundDecoder *m_Decoder;            /*!< @brief the surround decoder */
   float                      *m_InbufArray[2];      /*!< @brief Input buffer for free surround decoder */
@@ -49,17 +49,19 @@ private:
   void Deinitialize();
 
 public:
-  CDSPProcess_FreeSurround(unsigned int id);
+  CDSPProcess_FreeSurround( const AUDIODSP_ADDON_AUDIO_FORMAT& inputFormat,
+                            const AUDIODSP_ADDON_AUDIO_FORMAT& outputFormat,
+                            const AUDIODSP_ADDON_STREAM_PROPERTIES& streamProperties);
   virtual ~CDSPProcess_FreeSurround();
 
-  AE_DSP_ERROR StreamCreate(const AE_DSP_SETTINGS *settings, const AE_DSP_STREAM_PROPERTIES *pProperties);
-  AE_DSP_ERROR StreamDestroy();
-  AE_DSP_ERROR StreamInitialize(const AE_DSP_SETTINGS *settings);
-  AE_DSP_ERROR StreamIsModeSupported(AE_DSP_MODE_TYPE type, unsigned int mode_id, int unique_db_mode_id);
+  AUDIODSP_ADDON_ERROR Create();
+  AUDIODSP_ADDON_ERROR Destroy();
 
-  unsigned int StreamProcess(const float **array_in, float **array_out, unsigned int samples);
-  int          StreamGetOutChannels(unsigned long &out_channel_present_flags);
+  unsigned int Process(const float **array_in, float **array_out);
   float        StreamGetDelay();
+
+  AUDIODSP_ADDON_AUDIO_FORMAT GetInputFormat();
+  AUDIODSP_ADDON_AUDIO_FORMAT GetOutputFormat();
 
   void SetCircularWrap(float degree);
   void SetShift(float value);

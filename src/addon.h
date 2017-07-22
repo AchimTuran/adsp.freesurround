@@ -21,4 +21,3 @@
 #include <kodi/addon-instance/AudioDSP.h>
 
 class CDSPProcess_FreeSurround;
-extern CDSPProcess_FreeSurround *g_usedDSPs[AE_DSP_STREAM_MAX_STREAMS];

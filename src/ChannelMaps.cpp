@@ -31,7 +31,7 @@
 float map_stereo_ang[] = {-27,27};
 float map_stereo_xsf[] = {-1,1};
 float map_stereo_ysf[] = {1,1};
-AE_DSP_CHANNEL_PRESENT map_stereo_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_stereo_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_LFE};
 
 float map_stereo_lf[21][21] = {
    {0.89443f,0.88524f,0.87458f,0.86193f,0.84742f,0.83047f,0.81079f,0.78857f,0.76362f,0.73631f,0.70763f,0.67665f,0.64566f,0.61552f,0.58534f,0.55766f,0.53151f,0.50762f,0.48547f,0.46573f,0.44721f},
@@ -82,7 +82,7 @@ float map_stereo_rf[21][21] = {
 float map_3stereo_ang[] = {-27,0,27};
 float map_3stereo_xsf[] = {-1,0,1};
 float map_3stereo_ysf[] = {1,1,1};
-AE_DSP_CHANNEL_PRESENT map_3stereo_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_3stereo_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_LFE};
 
 float map_3stereo_lf[21][21] = {
    {0.89443f,0.88524f,0.87458f,0.86193f,0.84742f,0.83047f,0.81079f,0.78857f,0.76362f,0.73631f,0.70763f,0.67665f,0.64566f,0.61552f,0.58534f,0.55766f,0.53151f,0.50762f,0.48547f,0.46573f,0.44721f},
@@ -156,7 +156,7 @@ float map_3stereo_rf[21][21] = {
 float map_5stereo_ang[] = {-45,-22,0,22,45};
 float map_5stereo_xsf[] = {-1,-0.5,0,0.5,1};
 float map_5stereo_ysf[] = {1,1,1,1,1};
-AE_DSP_CHANNEL_PRESENT map_5stereo_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FLOC,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FROC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_5stereo_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_LFE};
 
 float map_5stereo_lf[21][21] = {
    {0.89443f,0.88524f,0.87458f,0.86193f,0.84742f,0.83047f,0.81079f,0.78857f,0.76362f,0.73631f,0.70763f,0.67665f,0.64566f,0.61552f,0.58534f,0.55766f,0.53151f,0.50762f,0.48547f,0.46573f,0.44721f},
@@ -276,7 +276,7 @@ float map_5stereo_rf[21][21] = {
 float map_4point1_ang[] = {-27,27,-105,105};
 float map_4point1_xsf[] = {-1,1,-1,1};
 float map_4point1_ysf[] = {1,1,-1,-1};
-AE_DSP_CHANNEL_PRESENT map_4point1_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_4point1_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_LFE};
 
 float map_4point1_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -373,7 +373,7 @@ float map_4point1_rs[21][21] = {
 float map_5point1_ang[] = {-27,0,27,-105,105};
 float map_5point1_xsf[] = {-1,0,1,-1,1};
 float map_5point1_ysf[] = {1,1,1,-1,-1};
-AE_DSP_CHANNEL_PRESENT map_5point1_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_5point1_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_LFE};
 
 float map_5point1_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -493,7 +493,7 @@ float map_5point1_rs[21][21] = {
 float map_6point1_ang[] = {-27,0,27,-100,100,180};
 float map_6point1_xsf[] = {-1,0,1,-1,1,0};
 float map_6point1_ysf[] = {1,1,1,0,0,-1};
-AE_DSP_CHANNEL_PRESENT map_6point1_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_BC,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_6point1_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_BC, AUDIODSP_ADDON_CH_LFE};
 
 float map_6point1_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -636,7 +636,7 @@ float map_6point1_cs[21][21] = {
 float map_7point1_ang[] = {-27,0,27,-95,95,-142,142};
 float map_7point1_xsf[] = {-1,0,1,-1,1,-1,1};
 float map_7point1_ysf[] = {1,1,1,0,0,-1,-1};
-AE_DSP_CHANNEL_PRESENT map_7point1_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_BL,AE_DSP_PRSNT_CH_BR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_7point1_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_BL, AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE};
 
 float map_7point1_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -802,7 +802,7 @@ float map_7point1_rs[21][21] = {
 float map_7point1_panorama_ang[] = {-45,-26,0,26,45,-95,95};
 float map_7point1_panorama_xsf[] = {-1,-0.5,0,0.5,1,-1,1};
 float map_7point1_panorama_ysf[] = {1,1,1,1,1,0,0};
-AE_DSP_CHANNEL_PRESENT map_7point1_panorama_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FLOC,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FROC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_7point1_panorama_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_LFE};
 
 float map_7point1_panorama_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -968,7 +968,7 @@ float map_7point1_panorama_rsm[21][21] = {
 float map_7point1_tricenter_ang[] = {-45,-26,0,26,45,-110,110};
 float map_7point1_tricenter_xsf[] = {-1,-0.5,0,0.5,1,-1,1};
 float map_7point1_tricenter_ysf[] = {1,1,1,1,1,-1,-1};
-AE_DSP_CHANNEL_PRESENT map_7point1_tricenter_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FLOC,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FROC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_BL,AE_DSP_PRSNT_CH_BR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_7point1_tricenter_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_BL, AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE};
 
 float map_7point1_tricenter_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -1134,7 +1134,7 @@ float map_7point1_tricenter_rs[21][21] = {
 float map_8point1_ang[] = {-45,0,45,-90,90,-135,180,135};
 float map_8point1_xsf[] = {-1,0,1,-1,1,-1,0,1};
 float map_8point1_ysf[] = {1,1,1,0,0,-1,-1,-1};
-AE_DSP_CHANNEL_PRESENT map_8point1_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_BL,AE_DSP_PRSNT_CH_BC,AE_DSP_PRSNT_CH_BR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_8point1_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_BL, AUDIODSP_ADDON_CH_BC, AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE};
 
 float map_8point1_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -1323,7 +1323,7 @@ float map_8point1_rs[21][21] = {
 float map_9point1_densepanorama_ang[] = {-45,-26,0,26,45,-63,63,-95,95};
 float map_9point1_densepanorama_xsf[] = {-1,-0.5,0,0.5,1,-1,1,-1,1};
 float map_9point1_densepanorama_ysf[] = {1,1,1,1,1,0.5,0.5,0,0};
-AE_DSP_CHANNEL_PRESENT map_9point1_densepanorama_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FLOC,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FROC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_TFL,AE_DSP_PRSNT_CH_TFR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_9point1_densepanorama_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_TFL, AUDIODSP_ADDON_CH_TFR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_LFE};
 
 float map_9point1_densepanorama_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -1535,7 +1535,7 @@ float map_9point1_densepanorama_rsm[21][21] = {
 float map_9point1_wrap_ang[] = {-45,-26,0,26,45,-95,95,-142,142};
 float map_9point1_wrap_xsf[] = {-1,-0.5,0,0.5,1,-1,1,-1,1};
 float map_9point1_wrap_ysf[] = {1,1,1,1,1,0,0,-1,-1};
-AE_DSP_CHANNEL_PRESENT map_9point1_wrap_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FLOC,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FROC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_BL,AE_DSP_PRSNT_CH_BR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_9point1_wrap_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_BL, AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE};
 
 float map_9point1_wrap_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -1747,7 +1747,7 @@ float map_9point1_wrap_rs[21][21] = {
 float map_11point1_densewrap_ang[] = {-45,-26,0,26,45,-63,63,-90,90,-116,116};
 float map_11point1_densewrap_xsf[] = {-1,-0.5,0,0.5,1,-1,1,-1,1,-1,1};
 float map_11point1_densewrap_ysf[] = {1,1,1,1,1,0.5,0.5,0,0,-0.5,-0.5};
-AE_DSP_CHANNEL_PRESENT map_11point1_densewrap_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FLOC,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FROC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_TFL,AE_DSP_PRSNT_CH_TFR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_TBL,AE_DSP_PRSNT_CH_TBR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_11point1_densewrap_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_TFL, AUDIODSP_ADDON_CH_TFR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_TBL, AUDIODSP_ADDON_CH_TBR, AUDIODSP_ADDON_CH_LFE};
 
 float map_11point1_densewrap_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -2005,7 +2005,7 @@ float map_11point1_densewrap_rsb[21][21] = {
 float map_13point1_totalwrap_ang[] = {-45,-26,0,26,45,-63,63,-90,90,-116,116,-135,135};
 float map_13point1_totalwrap_xsf[] = {-1,-0.5,0,0.5,1,-1,1,-1,1,-1,1,-1,1};
 float map_13point1_totalwrap_ysf[] = {1,1,1,1,1,0.5,0.5,0,0,-0.5,-0.5,-1,-1};
-AE_DSP_CHANNEL_PRESENT map_13point1_totalwrap_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FLOC,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FROC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_TFL,AE_DSP_PRSNT_CH_TFR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_TBL,AE_DSP_PRSNT_CH_TBR,AE_DSP_PRSNT_CH_BL,AE_DSP_PRSNT_CH_BR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_13point1_totalwrap_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_TFL, AUDIODSP_ADDON_CH_TFR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_TBL, AUDIODSP_ADDON_CH_TBR, AUDIODSP_ADDON_CH_BL, AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE};
 
 float map_13point1_totalwrap_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -2309,7 +2309,7 @@ float map_13point1_totalwrap_rs[21][21] = {
 float map_16point1_ang[] = {-45,-26,0,26,45,-63,63,-90,90,-116,116,-135,-153,180,153,135};
 float map_16point1_xsf[] = {-1,-0.5,0,0.5,1,-1,1,-1,1,-1,1,-1,-0.5,0,0.5,1};
 float map_16point1_ysf[] = {1,1,1,1,1,0.5,0.5,0,0,-0.5,-0.5,-1,-1,-1,-1,-1};
-AE_DSP_CHANNEL_PRESENT map_16point1_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FLOC,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FROC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_TFL,AE_DSP_PRSNT_CH_TFR,AE_DSP_PRSNT_CH_SL,AE_DSP_PRSNT_CH_SR,AE_DSP_PRSNT_CH_TBL,AE_DSP_PRSNT_CH_TBR,AE_DSP_PRSNT_CH_BL,AE_DSP_PRSNT_CH_BLOC,AE_DSP_PRSNT_CH_BC,AE_DSP_PRSNT_CH_BROC,AE_DSP_PRSNT_CH_BR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_16point1_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_TFL, AUDIODSP_ADDON_CH_TFR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_TBL, AUDIODSP_ADDON_CH_TBR, AUDIODSP_ADDON_CH_BL, AUDIODSP_ADDON_CH_BLOC, AUDIODSP_ADDON_CH_BC, AUDIODSP_ADDON_CH_BROC, AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE};
 
 float map_16point1_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -2682,7 +2682,7 @@ float map_16point1_rs[21][21] = {
 float map_legacy_ang[] = {-27,0,27,-105,105};
 float map_legacy_xsf[] = {-1,0,1,-1,1};
 float map_legacy_ysf[] = {1,1,1,-1,-1};
-AE_DSP_CHANNEL_PRESENT map_legacy_id[] = {AE_DSP_PRSNT_CH_FL,AE_DSP_PRSNT_CH_FC,AE_DSP_PRSNT_CH_FR,AE_DSP_PRSNT_CH_BL,AE_DSP_PRSNT_CH_BR,AE_DSP_PRSNT_CH_LFE};
+AUDIODSP_ADDON_CHANNEL map_legacy_id[] = {AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_BL, AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE};
 
 float map_legacy_lf[21][21] = {
    {0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f,0.000000f},
@@ -2826,20 +2826,20 @@ std::map<unsigned,alloc_lut> chn_alloc;
 std::map<unsigned,std::vector<float> > chn_angle;
 std::map<unsigned,std::vector<float> > chn_xsf;
 std::map<unsigned,std::vector<float> > chn_ysf;
-std::map<unsigned,std::vector<AE_DSP_CHANNEL_PRESENT> > chn_id;
+std::map<unsigned,std::vector<AUDIODSP_ADDON_CHANNEL> > chn_id;
 
 bool init_maps() {
     chn_angle[cs_stereo] = std::vector<float>(&map_stereo_ang[0],&map_stereo_ang[sizeof(map_stereo_ang)/sizeof(map_stereo_ang[0])]);
     chn_xsf[cs_stereo] = std::vector<float>(&map_stereo_xsf[0],&map_stereo_xsf[sizeof(map_stereo_xsf)/sizeof(map_stereo_xsf[0])]);
     chn_ysf[cs_stereo] = std::vector<float>(&map_stereo_ysf[0],&map_stereo_ysf[sizeof(map_stereo_ysf)/sizeof(map_stereo_ysf[0])]);
-    chn_id[cs_stereo] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_stereo_id[0],&map_stereo_id[sizeof(map_stereo_id)/sizeof(map_stereo_id[0])]);
+    chn_id[cs_stereo] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_stereo_id[0],&map_stereo_id[sizeof(map_stereo_id)/sizeof(map_stereo_id[0])]);
     chn_alloc[cs_stereo].push_back(std::vector<float*>(&map_stereo_lf[0],&map_stereo_lf[21]));
     chn_alloc[cs_stereo].push_back(std::vector<float*>(&map_stereo_rf[0],&map_stereo_rf[21]));
     chn_alloc[cs_stereo].push_back(std::vector<float*>(&map_lfe_lfe[0],&map_lfe_lfe[21]));
     chn_angle[cs_3stereo] = std::vector<float>(&map_3stereo_ang[0],&map_3stereo_ang[sizeof(map_3stereo_ang)/sizeof(map_3stereo_ang[0])]);
     chn_xsf[cs_3stereo] = std::vector<float>(&map_3stereo_xsf[0],&map_3stereo_xsf[sizeof(map_3stereo_xsf)/sizeof(map_3stereo_xsf[0])]);
     chn_ysf[cs_3stereo] = std::vector<float>(&map_3stereo_ysf[0],&map_3stereo_ysf[sizeof(map_3stereo_ysf)/sizeof(map_3stereo_ysf[0])]);
-    chn_id[cs_3stereo] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_3stereo_id[0],&map_3stereo_id[sizeof(map_3stereo_id)/sizeof(map_3stereo_id[0])]);
+    chn_id[cs_3stereo] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_3stereo_id[0],&map_3stereo_id[sizeof(map_3stereo_id)/sizeof(map_3stereo_id[0])]);
     chn_alloc[cs_3stereo].push_back(std::vector<float*>(&map_3stereo_lf[0],&map_3stereo_lf[21]));
     chn_alloc[cs_3stereo].push_back(std::vector<float*>(&map_3stereo_cf[0],&map_3stereo_cf[21]));
     chn_alloc[cs_3stereo].push_back(std::vector<float*>(&map_3stereo_rf[0],&map_3stereo_rf[21]));
@@ -2847,7 +2847,7 @@ bool init_maps() {
     chn_angle[cs_5stereo] = std::vector<float>(&map_5stereo_ang[0],&map_5stereo_ang[sizeof(map_5stereo_ang)/sizeof(map_5stereo_ang[0])]);
     chn_xsf[cs_5stereo] = std::vector<float>(&map_5stereo_xsf[0],&map_5stereo_xsf[sizeof(map_5stereo_xsf)/sizeof(map_5stereo_xsf[0])]);
     chn_ysf[cs_5stereo] = std::vector<float>(&map_5stereo_ysf[0],&map_5stereo_ysf[sizeof(map_5stereo_ysf)/sizeof(map_5stereo_ysf[0])]);
-    chn_id[cs_5stereo] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_5stereo_id[0],&map_5stereo_id[sizeof(map_5stereo_id)/sizeof(map_5stereo_id[0])]);
+    chn_id[cs_5stereo] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_5stereo_id[0],&map_5stereo_id[sizeof(map_5stereo_id)/sizeof(map_5stereo_id[0])]);
     chn_alloc[cs_5stereo].push_back(std::vector<float*>(&map_5stereo_lf[0],&map_5stereo_lf[21]));
     chn_alloc[cs_5stereo].push_back(std::vector<float*>(&map_5stereo_lcf[0],&map_5stereo_lcf[21]));
     chn_alloc[cs_5stereo].push_back(std::vector<float*>(&map_5stereo_cf[0],&map_5stereo_cf[21]));
@@ -2858,7 +2858,7 @@ bool init_maps() {
     chn_angle[cs_4point1_Side] = std::vector<float>(&map_4point1_ang[0],&map_4point1_ang[sizeof(map_4point1_ang)/sizeof(map_4point1_ang[0])]);
     chn_xsf[cs_4point1_Side] = std::vector<float>(&map_4point1_xsf[0],&map_4point1_xsf[sizeof(map_4point1_xsf)/sizeof(map_4point1_xsf[0])]);
     chn_ysf[cs_4point1_Side] = std::vector<float>(&map_4point1_ysf[0],&map_4point1_ysf[sizeof(map_4point1_ysf)/sizeof(map_4point1_ysf[0])]);
-    chn_id[cs_4point1_Side] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_4point1_id[0],&map_4point1_id[sizeof(map_4point1_id)/sizeof(map_4point1_id[0])]);
+    chn_id[cs_4point1_Side] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_4point1_id[0],&map_4point1_id[sizeof(map_4point1_id)/sizeof(map_4point1_id[0])]);
     chn_alloc[cs_4point1_Side].push_back(std::vector<float*>(&map_4point1_lf[0],&map_4point1_lf[21]));
     chn_alloc[cs_4point1_Side].push_back(std::vector<float*>(&map_4point1_rf[0],&map_4point1_rf[21]));
     chn_alloc[cs_4point1_Side].push_back(std::vector<float*>(&map_4point1_ls[0],&map_4point1_ls[21]));
@@ -2868,7 +2868,7 @@ bool init_maps() {
     chn_angle[cs_4point1_Back] = std::vector<float>(&map_4point1_ang[0],&map_4point1_ang[sizeof(map_4point1_ang)/sizeof(map_4point1_ang[0])]);
     chn_xsf[cs_4point1_Back] = std::vector<float>(&map_4point1_xsf[0],&map_4point1_xsf[sizeof(map_4point1_xsf)/sizeof(map_4point1_xsf[0])]);
     chn_ysf[cs_4point1_Back] = std::vector<float>(&map_4point1_ysf[0],&map_4point1_ysf[sizeof(map_4point1_ysf)/sizeof(map_4point1_ysf[0])]);
-    chn_id[cs_4point1_Back] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_4point1_id[0],&map_4point1_id[sizeof(map_4point1_id)/sizeof(map_4point1_id[0])]);
+    chn_id[cs_4point1_Back] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_4point1_id[0],&map_4point1_id[sizeof(map_4point1_id)/sizeof(map_4point1_id[0])]);
     chn_alloc[cs_4point1_Back].push_back(std::vector<float*>(&map_4point1_lf[0],&map_4point1_lf[21]));
     chn_alloc[cs_4point1_Back].push_back(std::vector<float*>(&map_4point1_rf[0],&map_4point1_rf[21]));
     chn_alloc[cs_4point1_Back].push_back(std::vector<float*>(&map_4point1_ls[0],&map_4point1_ls[21]));
@@ -2878,7 +2878,7 @@ bool init_maps() {
     chn_angle[cs_5point1_Side] = std::vector<float>(&map_5point1_ang[0],&map_5point1_ang[sizeof(map_5point1_ang)/sizeof(map_5point1_ang[0])]);
     chn_xsf[cs_5point1_Side] = std::vector<float>(&map_5point1_xsf[0],&map_5point1_xsf[sizeof(map_5point1_xsf)/sizeof(map_5point1_xsf[0])]);
     chn_ysf[cs_5point1_Side] = std::vector<float>(&map_5point1_ysf[0],&map_5point1_ysf[sizeof(map_5point1_ysf)/sizeof(map_5point1_ysf[0])]);
-    chn_id[cs_5point1_Side] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_5point1_id[0],&map_5point1_id[sizeof(map_5point1_id)/sizeof(map_5point1_id[0])]);
+    chn_id[cs_5point1_Side] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_5point1_id[0],&map_5point1_id[sizeof(map_5point1_id)/sizeof(map_5point1_id[0])]);
     chn_alloc[cs_5point1_Side].push_back(std::vector<float*>(&map_5point1_lf[0],&map_5point1_lf[21]));
     chn_alloc[cs_5point1_Side].push_back(std::vector<float*>(&map_5point1_cf[0],&map_5point1_cf[21]));
     chn_alloc[cs_5point1_Side].push_back(std::vector<float*>(&map_5point1_rf[0],&map_5point1_rf[21]));
@@ -2889,7 +2889,7 @@ bool init_maps() {
     chn_angle[cs_5point1_Back] = std::vector<float>(&map_5point1_ang[0],&map_5point1_ang[sizeof(map_5point1_ang)/sizeof(map_5point1_ang[0])]);
     chn_xsf[cs_5point1_Back] = std::vector<float>(&map_5point1_xsf[0],&map_5point1_xsf[sizeof(map_5point1_xsf)/sizeof(map_5point1_xsf[0])]);
     chn_ysf[cs_5point1_Back] = std::vector<float>(&map_5point1_ysf[0],&map_5point1_ysf[sizeof(map_5point1_ysf)/sizeof(map_5point1_ysf[0])]);
-    chn_id[cs_5point1_Back] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_5point1_id[0],&map_5point1_id[sizeof(map_5point1_id)/sizeof(map_5point1_id[0])]);
+    chn_id[cs_5point1_Back] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_5point1_id[0],&map_5point1_id[sizeof(map_5point1_id)/sizeof(map_5point1_id[0])]);
     chn_alloc[cs_5point1_Back].push_back(std::vector<float*>(&map_5point1_lf[0],&map_5point1_lf[21]));
     chn_alloc[cs_5point1_Back].push_back(std::vector<float*>(&map_5point1_cf[0],&map_5point1_cf[21]));
     chn_alloc[cs_5point1_Back].push_back(std::vector<float*>(&map_5point1_rf[0],&map_5point1_rf[21]));
@@ -2900,7 +2900,7 @@ bool init_maps() {
     chn_angle[cs_6point1] = std::vector<float>(&map_6point1_ang[0],&map_6point1_ang[sizeof(map_6point1_ang)/sizeof(map_6point1_ang[0])]);
     chn_xsf[cs_6point1] = std::vector<float>(&map_6point1_xsf[0],&map_6point1_xsf[sizeof(map_6point1_xsf)/sizeof(map_6point1_xsf[0])]);
     chn_ysf[cs_6point1] = std::vector<float>(&map_6point1_ysf[0],&map_6point1_ysf[sizeof(map_6point1_ysf)/sizeof(map_6point1_ysf[0])]);
-    chn_id[cs_6point1] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_6point1_id[0],&map_6point1_id[sizeof(map_6point1_id)/sizeof(map_6point1_id[0])]);
+    chn_id[cs_6point1] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_6point1_id[0],&map_6point1_id[sizeof(map_6point1_id)/sizeof(map_6point1_id[0])]);
     chn_alloc[cs_6point1].push_back(std::vector<float*>(&map_6point1_lf[0],&map_6point1_lf[21]));
     chn_alloc[cs_6point1].push_back(std::vector<float*>(&map_6point1_cf[0],&map_6point1_cf[21]));
     chn_alloc[cs_6point1].push_back(std::vector<float*>(&map_6point1_rf[0],&map_6point1_rf[21]));
@@ -2911,7 +2911,7 @@ bool init_maps() {
     chn_angle[cs_7point1] = std::vector<float>(&map_7point1_ang[0],&map_7point1_ang[sizeof(map_7point1_ang)/sizeof(map_7point1_ang[0])]);
     chn_xsf[cs_7point1] = std::vector<float>(&map_7point1_xsf[0],&map_7point1_xsf[sizeof(map_7point1_xsf)/sizeof(map_7point1_xsf[0])]);
     chn_ysf[cs_7point1] = std::vector<float>(&map_7point1_ysf[0],&map_7point1_ysf[sizeof(map_7point1_ysf)/sizeof(map_7point1_ysf[0])]);
-    chn_id[cs_7point1] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_7point1_id[0],&map_7point1_id[sizeof(map_7point1_id)/sizeof(map_7point1_id[0])]);
+    chn_id[cs_7point1] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_7point1_id[0],&map_7point1_id[sizeof(map_7point1_id)/sizeof(map_7point1_id[0])]);
     chn_alloc[cs_7point1].push_back(std::vector<float*>(&map_7point1_lf[0],&map_7point1_lf[21]));
     chn_alloc[cs_7point1].push_back(std::vector<float*>(&map_7point1_cf[0],&map_7point1_cf[21]));
     chn_alloc[cs_7point1].push_back(std::vector<float*>(&map_7point1_rf[0],&map_7point1_rf[21]));
@@ -2923,7 +2923,7 @@ bool init_maps() {
     chn_angle[cs_7point1_panorama] = std::vector<float>(&map_7point1_panorama_ang[0],&map_7point1_panorama_ang[sizeof(map_7point1_panorama_ang)/sizeof(map_7point1_panorama_ang[0])]);
     chn_xsf[cs_7point1_panorama] = std::vector<float>(&map_7point1_panorama_xsf[0],&map_7point1_panorama_xsf[sizeof(map_7point1_panorama_xsf)/sizeof(map_7point1_panorama_xsf[0])]);
     chn_ysf[cs_7point1_panorama] = std::vector<float>(&map_7point1_panorama_ysf[0],&map_7point1_panorama_ysf[sizeof(map_7point1_panorama_ysf)/sizeof(map_7point1_panorama_ysf[0])]);
-    chn_id[cs_7point1_panorama] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_7point1_panorama_id[0],&map_7point1_panorama_id[sizeof(map_7point1_panorama_id)/sizeof(map_7point1_panorama_id[0])]);
+    chn_id[cs_7point1_panorama] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_7point1_panorama_id[0],&map_7point1_panorama_id[sizeof(map_7point1_panorama_id)/sizeof(map_7point1_panorama_id[0])]);
     chn_alloc[cs_7point1_panorama].push_back(std::vector<float*>(&map_7point1_panorama_lf[0],&map_7point1_panorama_lf[21]));
     chn_alloc[cs_7point1_panorama].push_back(std::vector<float*>(&map_7point1_panorama_lcf[0],&map_7point1_panorama_lcf[21]));
     chn_alloc[cs_7point1_panorama].push_back(std::vector<float*>(&map_7point1_panorama_cf[0],&map_7point1_panorama_cf[21]));
@@ -2935,7 +2935,7 @@ bool init_maps() {
     chn_angle[cs_7point1_tricenter] = std::vector<float>(&map_7point1_tricenter_ang[0],&map_7point1_tricenter_ang[sizeof(map_7point1_tricenter_ang)/sizeof(map_7point1_tricenter_ang[0])]);
     chn_xsf[cs_7point1_tricenter] = std::vector<float>(&map_7point1_tricenter_xsf[0],&map_7point1_tricenter_xsf[sizeof(map_7point1_tricenter_xsf)/sizeof(map_7point1_tricenter_xsf[0])]);
     chn_ysf[cs_7point1_tricenter] = std::vector<float>(&map_7point1_tricenter_ysf[0],&map_7point1_tricenter_ysf[sizeof(map_7point1_tricenter_ysf)/sizeof(map_7point1_tricenter_ysf[0])]);
-    chn_id[cs_7point1_tricenter] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_7point1_tricenter_id[0],&map_7point1_tricenter_id[sizeof(map_7point1_tricenter_id)/sizeof(map_7point1_tricenter_id[0])]);
+    chn_id[cs_7point1_tricenter] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_7point1_tricenter_id[0],&map_7point1_tricenter_id[sizeof(map_7point1_tricenter_id)/sizeof(map_7point1_tricenter_id[0])]);
     chn_alloc[cs_7point1_tricenter].push_back(std::vector<float*>(&map_7point1_tricenter_lf[0],&map_7point1_tricenter_lf[21]));
     chn_alloc[cs_7point1_tricenter].push_back(std::vector<float*>(&map_7point1_tricenter_lcf[0],&map_7point1_tricenter_lcf[21]));
     chn_alloc[cs_7point1_tricenter].push_back(std::vector<float*>(&map_7point1_tricenter_cf[0],&map_7point1_tricenter_cf[21]));
@@ -2947,7 +2947,7 @@ bool init_maps() {
     chn_angle[cs_8point1] = std::vector<float>(&map_8point1_ang[0],&map_8point1_ang[sizeof(map_8point1_ang)/sizeof(map_8point1_ang[0])]);
     chn_xsf[cs_8point1] = std::vector<float>(&map_8point1_xsf[0],&map_8point1_xsf[sizeof(map_8point1_xsf)/sizeof(map_8point1_xsf[0])]);
     chn_ysf[cs_8point1] = std::vector<float>(&map_8point1_ysf[0],&map_8point1_ysf[sizeof(map_8point1_ysf)/sizeof(map_8point1_ysf[0])]);
-    chn_id[cs_8point1] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_8point1_id[0],&map_8point1_id[sizeof(map_8point1_id)/sizeof(map_8point1_id[0])]);
+    chn_id[cs_8point1] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_8point1_id[0],&map_8point1_id[sizeof(map_8point1_id)/sizeof(map_8point1_id[0])]);
     chn_alloc[cs_8point1].push_back(std::vector<float*>(&map_8point1_lf[0],&map_8point1_lf[21]));
     chn_alloc[cs_8point1].push_back(std::vector<float*>(&map_8point1_cf[0],&map_8point1_cf[21]));
     chn_alloc[cs_8point1].push_back(std::vector<float*>(&map_8point1_rf[0],&map_8point1_rf[21]));
@@ -2960,7 +2960,7 @@ bool init_maps() {
     chn_angle[cs_9point1_densepanorama] = std::vector<float>(&map_9point1_densepanorama_ang[0],&map_9point1_densepanorama_ang[sizeof(map_9point1_densepanorama_ang)/sizeof(map_9point1_densepanorama_ang[0])]);
     chn_xsf[cs_9point1_densepanorama] = std::vector<float>(&map_9point1_densepanorama_xsf[0],&map_9point1_densepanorama_xsf[sizeof(map_9point1_densepanorama_xsf)/sizeof(map_9point1_densepanorama_xsf[0])]);
     chn_ysf[cs_9point1_densepanorama] = std::vector<float>(&map_9point1_densepanorama_ysf[0],&map_9point1_densepanorama_ysf[sizeof(map_9point1_densepanorama_ysf)/sizeof(map_9point1_densepanorama_ysf[0])]);
-    chn_id[cs_9point1_densepanorama] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_9point1_densepanorama_id[0],&map_9point1_densepanorama_id[sizeof(map_9point1_densepanorama_id)/sizeof(map_9point1_densepanorama_id[0])]);
+    chn_id[cs_9point1_densepanorama] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_9point1_densepanorama_id[0],&map_9point1_densepanorama_id[sizeof(map_9point1_densepanorama_id)/sizeof(map_9point1_densepanorama_id[0])]);
     chn_alloc[cs_9point1_densepanorama].push_back(std::vector<float*>(&map_9point1_densepanorama_lf[0],&map_9point1_densepanorama_lf[21]));
     chn_alloc[cs_9point1_densepanorama].push_back(std::vector<float*>(&map_9point1_densepanorama_lcf[0],&map_9point1_densepanorama_lcf[21]));
     chn_alloc[cs_9point1_densepanorama].push_back(std::vector<float*>(&map_9point1_densepanorama_cf[0],&map_9point1_densepanorama_cf[21]));
@@ -2974,7 +2974,7 @@ bool init_maps() {
     chn_angle[cs_9point1_wrap] = std::vector<float>(&map_9point1_wrap_ang[0],&map_9point1_wrap_ang[sizeof(map_9point1_wrap_ang)/sizeof(map_9point1_wrap_ang[0])]);
     chn_xsf[cs_9point1_wrap] = std::vector<float>(&map_9point1_wrap_xsf[0],&map_9point1_wrap_xsf[sizeof(map_9point1_wrap_xsf)/sizeof(map_9point1_wrap_xsf[0])]);
     chn_ysf[cs_9point1_wrap] = std::vector<float>(&map_9point1_wrap_ysf[0],&map_9point1_wrap_ysf[sizeof(map_9point1_wrap_ysf)/sizeof(map_9point1_wrap_ysf[0])]);
-    chn_id[cs_9point1_wrap] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_9point1_wrap_id[0],&map_9point1_wrap_id[sizeof(map_9point1_wrap_id)/sizeof(map_9point1_wrap_id[0])]);
+    chn_id[cs_9point1_wrap] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_9point1_wrap_id[0],&map_9point1_wrap_id[sizeof(map_9point1_wrap_id)/sizeof(map_9point1_wrap_id[0])]);
     chn_alloc[cs_9point1_wrap].push_back(std::vector<float*>(&map_9point1_wrap_lf[0],&map_9point1_wrap_lf[21]));
     chn_alloc[cs_9point1_wrap].push_back(std::vector<float*>(&map_9point1_wrap_lcf[0],&map_9point1_wrap_lcf[21]));
     chn_alloc[cs_9point1_wrap].push_back(std::vector<float*>(&map_9point1_wrap_cf[0],&map_9point1_wrap_cf[21]));
@@ -2988,7 +2988,7 @@ bool init_maps() {
     chn_angle[cs_11point1_densewrap] = std::vector<float>(&map_11point1_densewrap_ang[0],&map_11point1_densewrap_ang[sizeof(map_11point1_densewrap_ang)/sizeof(map_11point1_densewrap_ang[0])]);
     chn_xsf[cs_11point1_densewrap] = std::vector<float>(&map_11point1_densewrap_xsf[0],&map_11point1_densewrap_xsf[sizeof(map_11point1_densewrap_xsf)/sizeof(map_11point1_densewrap_xsf[0])]);
     chn_ysf[cs_11point1_densewrap] = std::vector<float>(&map_11point1_densewrap_ysf[0],&map_11point1_densewrap_ysf[sizeof(map_11point1_densewrap_ysf)/sizeof(map_11point1_densewrap_ysf[0])]);
-    chn_id[cs_11point1_densewrap] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_11point1_densewrap_id[0],&map_11point1_densewrap_id[sizeof(map_11point1_densewrap_id)/sizeof(map_11point1_densewrap_id[0])]);
+    chn_id[cs_11point1_densewrap] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_11point1_densewrap_id[0],&map_11point1_densewrap_id[sizeof(map_11point1_densewrap_id)/sizeof(map_11point1_densewrap_id[0])]);
     chn_alloc[cs_11point1_densewrap].push_back(std::vector<float*>(&map_11point1_densewrap_lf[0],&map_11point1_densewrap_lf[21]));
     chn_alloc[cs_11point1_densewrap].push_back(std::vector<float*>(&map_11point1_densewrap_lcf[0],&map_11point1_densewrap_lcf[21]));
     chn_alloc[cs_11point1_densewrap].push_back(std::vector<float*>(&map_11point1_densewrap_cf[0],&map_11point1_densewrap_cf[21]));
@@ -3004,7 +3004,7 @@ bool init_maps() {
     chn_angle[cs_13point1_totalwrap] = std::vector<float>(&map_13point1_totalwrap_ang[0],&map_13point1_totalwrap_ang[sizeof(map_13point1_totalwrap_ang)/sizeof(map_13point1_totalwrap_ang[0])]);
     chn_xsf[cs_13point1_totalwrap] = std::vector<float>(&map_13point1_totalwrap_xsf[0],&map_13point1_totalwrap_xsf[sizeof(map_13point1_totalwrap_xsf)/sizeof(map_13point1_totalwrap_xsf[0])]);
     chn_ysf[cs_13point1_totalwrap] = std::vector<float>(&map_13point1_totalwrap_ysf[0],&map_13point1_totalwrap_ysf[sizeof(map_13point1_totalwrap_ysf)/sizeof(map_13point1_totalwrap_ysf[0])]);
-    chn_id[cs_13point1_totalwrap] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_13point1_totalwrap_id[0],&map_13point1_totalwrap_id[sizeof(map_13point1_totalwrap_id)/sizeof(map_13point1_totalwrap_id[0])]);
+    chn_id[cs_13point1_totalwrap] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_13point1_totalwrap_id[0],&map_13point1_totalwrap_id[sizeof(map_13point1_totalwrap_id)/sizeof(map_13point1_totalwrap_id[0])]);
     chn_alloc[cs_13point1_totalwrap].push_back(std::vector<float*>(&map_13point1_totalwrap_lf[0],&map_13point1_totalwrap_lf[21]));
     chn_alloc[cs_13point1_totalwrap].push_back(std::vector<float*>(&map_13point1_totalwrap_lcf[0],&map_13point1_totalwrap_lcf[21]));
     chn_alloc[cs_13point1_totalwrap].push_back(std::vector<float*>(&map_13point1_totalwrap_cf[0],&map_13point1_totalwrap_cf[21]));
@@ -3022,7 +3022,7 @@ bool init_maps() {
     chn_angle[cs_16point1] = std::vector<float>(&map_16point1_ang[0],&map_16point1_ang[sizeof(map_16point1_ang)/sizeof(map_16point1_ang[0])]);
     chn_xsf[cs_16point1] = std::vector<float>(&map_16point1_xsf[0],&map_16point1_xsf[sizeof(map_16point1_xsf)/sizeof(map_16point1_xsf[0])]);
     chn_ysf[cs_16point1] = std::vector<float>(&map_16point1_ysf[0],&map_16point1_ysf[sizeof(map_16point1_ysf)/sizeof(map_16point1_ysf[0])]);
-    chn_id[cs_16point1] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_16point1_id[0],&map_16point1_id[sizeof(map_16point1_id)/sizeof(map_16point1_id[0])]);
+    chn_id[cs_16point1] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_16point1_id[0],&map_16point1_id[sizeof(map_16point1_id)/sizeof(map_16point1_id[0])]);
     chn_alloc[cs_16point1].push_back(std::vector<float*>(&map_16point1_lf[0],&map_16point1_lf[21]));
     chn_alloc[cs_16point1].push_back(std::vector<float*>(&map_16point1_lcf[0],&map_16point1_lcf[21]));
     chn_alloc[cs_16point1].push_back(std::vector<float*>(&map_16point1_cf[0],&map_16point1_cf[21]));
@@ -3043,7 +3043,7 @@ bool init_maps() {
     chn_angle[cs_legacy] = std::vector<float>(&map_legacy_ang[0],&map_legacy_ang[sizeof(map_legacy_ang)/sizeof(map_legacy_ang[0])]);
     chn_xsf[cs_legacy] = std::vector<float>(&map_legacy_xsf[0],&map_legacy_xsf[sizeof(map_legacy_xsf)/sizeof(map_legacy_xsf[0])]);
     chn_ysf[cs_legacy] = std::vector<float>(&map_legacy_ysf[0],&map_legacy_ysf[sizeof(map_legacy_ysf)/sizeof(map_legacy_ysf[0])]);
-    chn_id[cs_legacy] = std::vector<AE_DSP_CHANNEL_PRESENT>(&map_legacy_id[0],&map_legacy_id[sizeof(map_legacy_id)/sizeof(map_legacy_id[0])]);
+    chn_id[cs_legacy] = std::vector<AUDIODSP_ADDON_CHANNEL>(&map_legacy_id[0],&map_legacy_id[sizeof(map_legacy_id)/sizeof(map_legacy_id[0])]);
     chn_alloc[cs_legacy].push_back(std::vector<float*>(&map_legacy_lf[0],&map_legacy_lf[21]));
     chn_alloc[cs_legacy].push_back(std::vector<float*>(&map_legacy_cf[0],&map_legacy_cf[21]));
     chn_alloc[cs_legacy].push_back(std::vector<float*>(&map_legacy_rf[0],&map_legacy_rf[21]));

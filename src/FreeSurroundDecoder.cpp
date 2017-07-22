@@ -383,7 +383,7 @@ unsigned CFreeSurroundDecoder::num_channels(channel_setup s)
   return chn_id[s].size();
 }
 
-AE_DSP_CHANNEL_PRESENT CFreeSurroundDecoder::channel_at(channel_setup s, unsigned i)
-{
-  return i < chn_id[s].size() ? chn_id[s][i] : AE_DSP_PRSNT_CH_UNDEFINED;
-}
+//AE_DSP_CHANNEL_PRESENT CFreeSurroundDecoder::channel_at(channel_setup s, unsigned i)
+//{
+//  return i < chn_id[s].size() ? chn_id[s][i] : AE_DSP_PRSNT_CH_UNDEFINED;
+//}

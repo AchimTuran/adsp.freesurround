@@ -2828,7 +2828,7 @@ std::map<unsigned,std::vector<float> > chn_xsf;
 std::map<unsigned,std::vector<float> > chn_ysf;
 std::map<unsigned,std::vector<AUDIODSP_ADDON_CHANNEL> > chn_id;
 
-bool init_maps() {
+const bool init_maps() {
     chn_angle[cs_stereo] = std::vector<float>(&map_stereo_ang[0],&map_stereo_ang[sizeof(map_stereo_ang)/sizeof(map_stereo_ang[0])]);
     chn_xsf[cs_stereo] = std::vector<float>(&map_stereo_xsf[0],&map_stereo_xsf[sizeof(map_stereo_xsf)/sizeof(map_stereo_xsf[0])]);
     chn_ysf[cs_stereo] = std::vector<float>(&map_stereo_ysf[0],&map_stereo_ysf[sizeof(map_stereo_ysf)/sizeof(map_stereo_ysf[0])]);
@@ -3053,4 +3053,4 @@ bool init_maps() {
     return true;
 }
 
-namespace { bool success = init_maps(); };
+namespace { const bool success = init_maps(); };

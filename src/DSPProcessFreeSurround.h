@@ -44,9 +44,11 @@ private:
   int                         m_LatencyFrames;      /*!< @brief number of frames of incurred latency */
   channel_setup               m_DecoderChannelSetup;/*!< @brief the free surround channel setup */
   bool                        m_LFEPresent;         /*!< @brief if true LFE signal generation is done inside decoder */
+  int                         m_channelMapping[AUDIODSP_ADDON_CH_MAX];
 
   void SetParams();
   void Deinitialize();
+  channel_setup GetChannelSetup();
 
 public:
   CDSPProcess_FreeSurround( const AUDIODSP_ADDON_AUDIO_FORMAT& inputFormat,

@@ -62,4 +62,4 @@ extern std::map<unsigned,std::vector<float>> chn_angle;
 extern std::map<unsigned,std::vector<float>> chn_xsf;
 extern std::map<unsigned,std::vector<float>> chn_ysf;
 extern std::map<unsigned,std::vector<AUDIODSP_ADDON_CHANNEL>> chn_id;
-extern bool init_maps();
+extern const bool init_maps();

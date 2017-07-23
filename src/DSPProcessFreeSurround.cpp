@@ -27,6 +27,7 @@
 #include "addon.h"
 #include "DSPProcessFreeSurround.h"
 #include "FreeSurroundSettings.h"
+#include "ChannelMaps.h"
 
 // our default internal block size, in floats
 static const unsigned default_block_size = SURROUND_BUFSIZE;
@@ -57,9 +58,7 @@ AUDIODSP_ADDON_ERROR CDSPProcess_FreeSurround::Create()
 {
   if (m_streamProperties.eStreamType == AUDIODSP_ADDON_ASTREAM_INVALID)
     return AUDIODSP_ADDON_ERROR_IGNORE_ME;
-  if (m_inputFormat.channelLayout.channelCount > 2)
-    return AUDIODSP_ADDON_ERROR_IGNORE_ME;
-  if (m_outputFormat.channelLayout.channelCount <= 3)
+  if (m_inputFormat.channelLayout.channelCount > 2 || m_outputFormat.channelLayout.channelCount <= 3)
     return AUDIODSP_ADDON_ERROR_IGNORE_ME;
   //! @todo check if this is really a bottleneck
   //if (m_inputFormat.sampleRate > 96000)
@@ -77,8 +76,19 @@ AUDIODSP_ADDON_ERROR CDSPProcess_FreeSurround::Create()
       break;
     }
   }
+
+  if (!m_LFEPresent)
+  { // force LFE channel processing
+    m_outputFormat.channelLayout.channels[m_outputFormat.channelLayout.channelCount] = AUDIODSP_ADDON_CH_LFE;
+    m_outputFormat.channelLayout.channelCount++;
+  }
   
-  m_DecoderChannelSetup;// = (channel_setup)(settings->lOutChannelPresentFlags | AUDIODSP_ADDON_PRSNT_CH_LFE);
+  memset(m_channelMapping, AUDIODSP_ADDON_CH_INVALID, sizeof(m_channelMapping));
+  m_DecoderChannelSetup = GetChannelSetup();
+  if (m_DecoderChannelSetup <= cs_invalid || m_DecoderChannelSetup >= cs_max)
+  {
+    return AUDIODSP_ADDON_ERROR_IGNORE_ME;
+  }
   
   if (m_Decoder)
     delete m_Decoder;
@@ -105,6 +115,67 @@ void CDSPProcess_FreeSurround::Deinitialize()
     delete m_Decoder;
     m_Decoder = NULL;
   }
+}
+
+//AUDIODSP_ADDON_CHANNEL map_stereo_id[]                  = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FR,   AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_3stereo_id[]                 = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FR,   AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_5stereo_id[]                 = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_4point1_id[]                 = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FR,   AUDIODSP_ADDON_CH_SL,   AUDIODSP_ADDON_CH_SR,   AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_5point1_id[]                 = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FR,   AUDIODSP_ADDON_CH_SL,   AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_6point1_id[]                 = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FR,   AUDIODSP_ADDON_CH_SL,   AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_BC,   AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_7point1_id[]                 = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FR,   AUDIODSP_ADDON_CH_SL,   AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_BL,   AUDIODSP_ADDON_CH_BR,  AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_7point1_panorama_id[]        = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_SL,   AUDIODSP_ADDON_CH_SR,  AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_7point1_tricenter_id[]       = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_BL,   AUDIODSP_ADDON_CH_BR,  AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_8point1_id[]                 = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FR,   AUDIODSP_ADDON_CH_SL,   AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_BL,   AUDIODSP_ADDON_CH_BC,  AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_9point1_densepanorama_id[]   = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_TFL,  AUDIODSP_ADDON_CH_TFR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_9point1_wrap_id[]            = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_SL,   AUDIODSP_ADDON_CH_SR,  AUDIODSP_ADDON_CH_BL, AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_11point1_densewrap_id[]      = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_TFL,  AUDIODSP_ADDON_CH_TFR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_TBL, AUDIODSP_ADDON_CH_TBR, AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_13point1_totalwrap_id[]      = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_TFL,  AUDIODSP_ADDON_CH_TFR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_TBL, AUDIODSP_ADDON_CH_TBR, AUDIODSP_ADDON_CH_BL, AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_16point1_id[]                = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FLOC, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FROC, AUDIODSP_ADDON_CH_FR, AUDIODSP_ADDON_CH_TFL,  AUDIODSP_ADDON_CH_TFR, AUDIODSP_ADDON_CH_SL, AUDIODSP_ADDON_CH_SR, AUDIODSP_ADDON_CH_TBL, AUDIODSP_ADDON_CH_TBR, AUDIODSP_ADDON_CH_BL, AUDIODSP_ADDON_CH_BLOC, AUDIODSP_ADDON_CH_BC, AUDIODSP_ADDON_CH_BROC, AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE };
+//AUDIODSP_ADDON_CHANNEL map_legacy_id[]                  = { AUDIODSP_ADDON_CH_FL, AUDIODSP_ADDON_CH_FC,   AUDIODSP_ADDON_CH_FR,   AUDIODSP_ADDON_CH_BL,   AUDIODSP_ADDON_CH_BR, AUDIODSP_ADDON_CH_LFE };
+
+channel_setup CDSPProcess_FreeSurround::GetChannelSetup()
+{
+  channel_setup channelSetup = cs_invalid;
+  if (chn_id.size() <= 0)
+  {
+    return channelSetup;
+  }
+
+  for (unsigned int layout = 0; layout < cs_max; layout++)
+  {
+    channelSetup = static_cast<channel_setup>(layout);
+    for (unsigned int ch = 0; ch < chn_id[layout].size(); ch++)
+    { // try to find the channel setup
+      bool channelPresent = false;
+      for (unsigned int outCh = 0; outCh < m_outputFormat.channelLayout.channelCount; outCh++)
+      {
+        if (m_outputFormat.channelLayout.channels[outCh] == chn_id[layout].at(ch))
+        { // requested channel is present, leave loop and try to find the next channel
+          channelPresent = true;
+          break;
+        }
+      }
+
+      if (!channelPresent)
+      {
+        // one channel is not available, try next channel setup
+        channelSetup = cs_invalid;
+        continue;
+      }
+    }
+  }
+
+  // initialize channel mapping array
+  if (cs_invalid < channelSetup && channelSetup < cs_max)
+  {
+    for (unsigned int outCh = 0; outCh < m_outputFormat.channelLayout.channelCount; outCh++)
+    {
+      m_channelMapping[m_outputFormat.channelLayout.channels[outCh]] = outCh;
+    }
+  }
+
+  return channelSetup;
 }
 
 void CDSPProcess_FreeSurround::ResetSettings()
@@ -170,225 +241,225 @@ unsigned int CDSPProcess_FreeSurround::Process(const float **array_in, float **a
     {
       case cs_stereo:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[2][m_ProcessBufferPos];
         break;
       }
       case cs_3stereo:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[3][m_ProcessBufferPos];
         break;
       }
       case cs_5stereo:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FLOC][pos]  = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FROC][pos]  = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FLOC]][pos]  = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FROC]][pos]  = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[5][m_ProcessBufferPos];
         break;
       }
       case cs_4point1_Side:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[4][m_ProcessBufferPos];
         break;
       }
       case cs_4point1_Back:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BL][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BR][pos]    = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]][pos]    = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[4][m_ProcessBufferPos];
         break;
       }
       case cs_5point1_Side:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[5][m_ProcessBufferPos];
         break;
       }
       case cs_5point1_Back:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BL][pos]    = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]][pos]    = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[5][m_ProcessBufferPos];
         break;
       }
       case cs_6point1:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BC][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[5][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[6][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BC]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[6][m_ProcessBufferPos];
         break;
       }
       case cs_7point1:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BL][pos]    = outputs[5][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BR][pos]    = outputs[6][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[7][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]][pos]    = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]][pos]    = outputs[6][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[7][m_ProcessBufferPos];
         break;
       }
       case cs_7point1_panorama:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FLOC][pos]  = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FROC][pos]  = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[5][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[6][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[7][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FLOC]][pos]  = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FROC]][pos]  = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[6][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[7][m_ProcessBufferPos];
         break;
       }
       case cs_7point1_tricenter:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FLOC][pos]  = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FROC][pos]  = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BL][pos]    = outputs[5][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BR][pos]    = outputs[6][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[7][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FLOC]][pos]  = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FROC]][pos]  = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]][pos]    = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]][pos]    = outputs[6][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[7][m_ProcessBufferPos];
         break;
       }
       case cs_8point1:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BL][pos]    = outputs[5][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BC][pos]    = outputs[6][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BR][pos]    = outputs[7][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[8][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]][pos]    = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BC]][pos]    = outputs[6][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]][pos]    = outputs[7][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[8][m_ProcessBufferPos];
         break;
       }
       case cs_9point1_densepanorama:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FLOC][pos]  = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FROC][pos]  = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TFL][pos]   = outputs[5][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TFR][pos]   = outputs[6][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[7][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[8][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[9][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FLOC]][pos]  = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FROC]][pos]  = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TFL]][pos]   = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TFR]][pos]   = outputs[6][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[7][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[8][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[9][m_ProcessBufferPos];
         break;
       }
       case cs_9point1_wrap:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FLOC][pos]  = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FROC][pos]  = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[5][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[6][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BL][pos]    = outputs[7][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BR][pos]    = outputs[8][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[9][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FLOC]][pos]  = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FROC]][pos]  = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[6][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]][pos]    = outputs[7][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]][pos]    = outputs[8][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[9][m_ProcessBufferPos];
         break;
       }
       case cs_11point1_densewrap:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FLOC][pos]  = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FROC][pos]  = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TFL][pos]   = outputs[5][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TFR][pos]   = outputs[6][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[7][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[8][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BL][pos]    = outputs[9][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BR][pos]    = outputs[10][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[11][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FLOC]][pos]  = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FROC]][pos]  = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TFL]][pos]   = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TFR]][pos]   = outputs[6][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[7][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[8][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]][pos]    = outputs[9][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]][pos]    = outputs[10][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[11][m_ProcessBufferPos];
         break;
       }
       case cs_13point1_totalwrap:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FLOC][pos]  = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FROC][pos]  = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TFL][pos]   = outputs[5][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TFR][pos]   = outputs[6][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[7][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[8][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TBL][pos]   = outputs[9][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TBR][pos]   = outputs[10][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BL][pos]    = outputs[11][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BR][pos]    = outputs[12][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[13][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FLOC]][pos]  = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FROC]][pos]  = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TFL]][pos]   = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TFR]][pos]   = outputs[6][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[7][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[8][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TBL]][pos]   = outputs[9][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TBR]][pos]   = outputs[10][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]][pos]    = outputs[11][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]][pos]    = outputs[12][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[13][m_ProcessBufferPos];
         break;
       }
       case cs_16point1:
       {
-        array_out[AUDIODSP_ADDON_CH_FL][pos]    = outputs[0][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FLOC][pos]  = outputs[1][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FC][pos]    = outputs[2][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FROC][pos]  = outputs[3][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_FR][pos]    = outputs[4][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TFL][pos]   = outputs[5][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TFR][pos]   = outputs[6][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SL][pos]    = outputs[7][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_SR][pos]    = outputs[8][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TBL][pos]   = outputs[9][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_TBR][pos]   = outputs[10][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BL][pos]    = outputs[11][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BLOC][pos]  = outputs[12][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BC][pos]    = outputs[14][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BROC][pos]  = outputs[15][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_BR][pos]    = outputs[15][m_ProcessBufferPos];
-        array_out[AUDIODSP_ADDON_CH_LFE][pos]   = outputs[16][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]    = outputs[0][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FLOC]][pos]  = outputs[1][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]    = outputs[2][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FROC]][pos]  = outputs[3][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]    = outputs[4][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TFL]][pos]   = outputs[5][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TFR]][pos]   = outputs[6][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SL]][pos]    = outputs[7][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_SR]][pos]    = outputs[8][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TBL]][pos]   = outputs[9][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_TBR]][pos]   = outputs[10][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]][pos]    = outputs[11][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BLOC]][pos]  = outputs[12][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BC]][pos]    = outputs[14][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BROC]][pos]  = outputs[15][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]][pos]    = outputs[15][m_ProcessBufferPos];
+        array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos]   = outputs[16][m_ProcessBufferPos];
         break;
       }
       case cs_legacy:
       default:
       {
-        if (array_out[AUDIODSP_ADDON_CH_FL])
-          array_out[AUDIODSP_ADDON_CH_FL][pos]  = outputs[0][m_ProcessBufferPos];
-        if (array_out[AUDIODSP_ADDON_CH_FC])
-          array_out[AUDIODSP_ADDON_CH_FC][pos]  = outputs[1][m_ProcessBufferPos];
-        if (array_out[AUDIODSP_ADDON_CH_FR])
-          array_out[AUDIODSP_ADDON_CH_FR][pos]  = outputs[2][m_ProcessBufferPos];
-        if (array_out[AUDIODSP_ADDON_CH_BL])
-          array_out[AUDIODSP_ADDON_CH_BL][pos]  = outputs[3][m_ProcessBufferPos];
-        if (array_out[AUDIODSP_ADDON_CH_BR])
-          array_out[AUDIODSP_ADDON_CH_BR][pos]  = outputs[4][m_ProcessBufferPos];
-        if (array_out[AUDIODSP_ADDON_CH_LFE])
-          array_out[AUDIODSP_ADDON_CH_LFE][pos] = outputs[5][m_ProcessBufferPos];
+        if (array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]])
+          array_out[m_channelMapping[AUDIODSP_ADDON_CH_FL]][pos]  = outputs[0][m_ProcessBufferPos];
+        if (array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]])
+          array_out[m_channelMapping[AUDIODSP_ADDON_CH_FC]][pos]  = outputs[1][m_ProcessBufferPos];
+        if (array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]])
+          array_out[m_channelMapping[AUDIODSP_ADDON_CH_FR]][pos]  = outputs[2][m_ProcessBufferPos];
+        if (array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]])
+          array_out[m_channelMapping[AUDIODSP_ADDON_CH_BL]][pos]  = outputs[3][m_ProcessBufferPos];
+        if (array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]])
+          array_out[m_channelMapping[AUDIODSP_ADDON_CH_BR]][pos]  = outputs[4][m_ProcessBufferPos];
+        if (array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]])
+          array_out[m_channelMapping[AUDIODSP_ADDON_CH_LFE]][pos] = outputs[5][m_ProcessBufferPos];
         break;
       }
     }

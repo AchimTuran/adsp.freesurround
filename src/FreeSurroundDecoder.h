@@ -36,35 +36,28 @@
 * of the cs_5point1 setup: http://en.wikipedia.org/wiki/File:5_1_channels_(surround_sound)_label.svg
 */
 typedef enum {
-  cs_stereo = 0, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_3stereo, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_5stereo, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FLOC | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FROC | AE_DSP_PRSNT_CH_FR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_4point1_Side, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FR | AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_4point1_Back, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FR | AE_DSP_PRSNT_CH_BL | AE_DSP_PRSNT_CH_BR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_5point1_Side, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FR | AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_5point1_Back, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FR | AE_DSP_PRSNT_CH_BL | AE_DSP_PRSNT_CH_BR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_6point1, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FR | AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR | AE_DSP_PRSNT_CH_BC | AE_DSP_PRSNT_CH_LFE,*/
-  cs_7point1, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FR | AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR | AE_DSP_PRSNT_CH_BL | AE_DSP_PRSNT_CH_BR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_7point1_panorama, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FLOC | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FROC | AE_DSP_PRSNT_CH_FR |
-               AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_7point1_tricenter, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FLOC | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FROC | AE_DSP_PRSNT_CH_FR |
-               AE_DSP_PRSNT_CH_BL | AE_DSP_PRSNT_CH_BR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_8point1, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FR | AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR |
-               AE_DSP_PRSNT_CH_BL | AE_DSP_PRSNT_CH_BC | AE_DSP_PRSNT_CH_BR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_9point1_densepanorama, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FLOC | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FROC | AE_DSP_PRSNT_CH_FR |
-               AE_DSP_PRSNT_CH_TFL | AE_DSP_PRSNT_CH_TFR | AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_9point1_wrap, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FLOC | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FROC | AE_DSP_PRSNT_CH_FR |
-               AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR | AE_DSP_PRSNT_CH_BL | AE_DSP_PRSNT_CH_BR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_11point1_densewrap, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FLOC | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FROC | AE_DSP_PRSNT_CH_FR |
-               AE_DSP_PRSNT_CH_TFL | AE_DSP_PRSNT_CH_TFR | AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR |
-               AE_DSP_PRSNT_CH_TBL | AE_DSP_PRSNT_CH_TBR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_13point1_totalwrap, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FLOC | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FROC | AE_DSP_PRSNT_CH_FR |
-               AE_DSP_PRSNT_CH_TFL | AE_DSP_PRSNT_CH_TFR | AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR |
-               AE_DSP_PRSNT_CH_TBL | AE_DSP_PRSNT_CH_TBR | AE_DSP_PRSNT_CH_BL | AE_DSP_PRSNT_CH_BR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_16point1, /*= AE_DSP_PRSNT_CH_FL | AE_DSP_PRSNT_CH_FLOC | AE_DSP_PRSNT_CH_FC | AE_DSP_PRSNT_CH_FROC | AE_DSP_PRSNT_CH_FR |
-               AE_DSP_PRSNT_CH_TFL | AE_DSP_PRSNT_CH_TFR | AE_DSP_PRSNT_CH_SL | AE_DSP_PRSNT_CH_SR | AE_DSP_PRSNT_CH_TBL |
-               AE_DSP_PRSNT_CH_TBR | AE_DSP_PRSNT_CH_BL | AE_DSP_PRSNT_CH_BLOC | AE_DSP_PRSNT_CH_BC | AE_DSP_PRSNT_CH_BROC | AE_DSP_PRSNT_CH_BR | AE_DSP_PRSNT_CH_LFE,*/
-  cs_legacy// = 0 // same channels as cs_5point1 but different upmixing transform; does not support the focus control
+  cs_invalid = -1,
+
+  cs_stereo = 0,
+  cs_3stereo,
+  cs_5stereo,
+  cs_4point1_Side,
+  cs_4point1_Back,
+  cs_5point1_Side,
+  cs_5point1_Back,
+  cs_6point1,
+  cs_7point1,
+  cs_7point1_panorama,
+  cs_7point1_tricenter,
+  cs_8point1,
+  cs_9point1_densepanorama,
+  cs_9point1_wrap,
+  cs_11point1_densewrap,
+  cs_13point1_totalwrap,
+  cs_16point1,
+  cs_legacy, // same channels as cs_5point1 but different upmixing transform; does not support the focus control
+  
+  cs_max
 } channel_setup;
 
 typedef std::complex<kiss_fft_scalar> cplx;
